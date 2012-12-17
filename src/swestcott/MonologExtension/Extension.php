@@ -4,6 +4,7 @@ namespace swestcott\MonologExtension;
 
 use Symfony\Component\Config\FileLocator,
     Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition,
+    Symfony\Component\DependencyInjection\Definition,
     Symfony\Component\DependencyInjection\ContainerBuilder,
     Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
@@ -22,17 +23,23 @@ class Extension implements ExtensionInterface
 
         $handlers = array();
 
-        foreach ($config['handlers'] as $name => $value) {
+        foreach ($config['handlers'] as $name => $config) {
+
             $handlers[] = $name;
-            $handlerNs = 'behat.monolog.handlers.'.$name.'.';
-            $container->setParameter($handlerNs.'type', $value['type']);
 
-            if (isset($value['path'])) {
-                $container->setParameter($handlerNs.'path', $value['path']);
-            }
+            switch ($config['type']) {
+                case 'stream':
+                    $container->setDefinition($name, new Definition(
+                        'Monolog\Handler\StreamHandler',
+                        array(
+                            $config['path'],
+                            $config['level']
+                        )
+                    ));
+                    break;
 
-            if (isset($value['level'])) {
-                $container->setParameter($handlerNs.'level', $value['level']);
+                default:
+                    throw new \InvalidArgumentException('Invalid or supported handler supplied: "'.$config['type'].'"');
             }
         }
 
@@ -48,15 +55,16 @@ class Extension implements ExtensionInterface
                 arrayNode('handlers')->
                     isRequired()->
                     requiresAtLeastOneElement()->
-//                    useAttributeAsKey('handler_name')->
+                    useAttributeAsKey('name')->
                     prototype('array')->
                         children()->
                             scalarNode('type')->
                                 isRequired()->
                                 cannotBeEmpty()->
                             end()->
-                            scalarNode('path')->end()->
                             scalarNode('level')->end()->
+                            scalarNode('path')->end()-> // stream
+                            // add
                         end()->
                     end()->
                 end()->
