@@ -20,7 +20,7 @@ class MonologInitializer implements InitializerInterface
         $class = $this->container->getParameter('behat.monolog.service.class');
 
         $def = $this->container->getDefinition('behat.monolog.logger');
-        $def->addArgument(get_class($context));
+        $def->setArgument(array(get_class($context));
         $logger = $this->container->get('behat.monolog.logger');
 
         $handlers = $this->container->getParameter('behat.monolog.handlers');
