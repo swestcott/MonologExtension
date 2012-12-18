@@ -36,6 +36,6 @@ class MonologInitializer implements InitializerInterface
 
     public function supports(ContextInterface $context)
     {
-        return get_class($context) === $this->container->getParameter('behat.context.class');
+        return ($context instanceof BehatContext);
     }
 }
