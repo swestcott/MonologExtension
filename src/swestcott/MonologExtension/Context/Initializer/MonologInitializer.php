@@ -17,25 +17,21 @@ class MonologInitializer implements InitializerInterface
     public function initialize(ContextInterface $context)
     {
         $loggerName = $this->container->getParameter('behat.monolog.logger_name');
-        $class = $this->container->getParameter('behat.monolog.service.class');
+        $class = $this->container->getParameter('behat.monolog.class');
+        
+        $def = $this->container->getDefinition('behat.monolog.logger.manager');
+        $def->setArguments(array(get_class($context)));
+        
+        // In theory, this uses my factory to generate the logger instance, 
+        // passing in the Behat Context class name to factory->get($name)
+        $logger = $this->container->get('behat.monolog.logger.manager');
 
-        $def = $this->container->getDefinition('behat.monolog.logger');
-        $def->setArgument(array(get_class($context));
-        $logger = $this->container->get('behat.monolog.logger');
-
-        $handlers = $this->container->getParameter('behat.monolog.handlers');
-
-        // Register each configured handler with logger
-        foreach($handlers as $name) {
-            $handler = $this->container->get($name);
-            $logger->pushHandler($handler);
-        }
-
+        // Finally, attached logger to (sub-)context
         $context->$loggerName = $logger;
     }
 
     public function supports(ContextInterface $context)
     {
-        return ($context instanceof BehatContext);
+        return ($context instanceof SubcontextableContextInterface);
     }
 }

@@ -29,13 +29,15 @@ class Extension implements ExtensionInterface
 
             switch ($config['type']) {
                 case 'stream':
-                    $container->setDefinition($name, new Definition(
+                    $def = new Definition(
                         'Monolog\Handler\StreamHandler',
                         array(
                             $config['path'],
                             $config['level']
                         )
-                    ));
+                    );
+                    $def->addTag('behat.monolog.handler.tag');
+                    $container->setDefinition($name, $def);
                     break;
 
                 default:
