@@ -15,5 +15,7 @@ class Factory
             $handler = $container->get($id);
             $logger->pushHandler($handler);
         }
+
+	return $logger;
     }
 }
