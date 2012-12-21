@@ -20,7 +20,7 @@ class MonologInitializer implements InitializerInterface
         $class = $this->container->getParameter('behat.monolog.class');
 
         $def = $this->container->getDefinition('behat.monolog.logger.manager');
-        $def->setArguments(array(get_class($context)));
+        $def->setArguments(array($this->container, get_class($context)));
 
         // In theory, this uses my factory to generate the logger instance,
         // passing in the Behat Context class name to factory->get($name)
