@@ -11,7 +11,7 @@
     </parameters>
 
     <services>
-        <service id="behat.monolog.service.monologinitializer" class="behat.monolog.initializer.class">
+        <service id="behat.monolog.service.monologinitializer" class="%behat.monolog.initializer.class%">
             <argument type="service" id="service_container" />
             <tag name="behat.context.initializer" />
         </service>
