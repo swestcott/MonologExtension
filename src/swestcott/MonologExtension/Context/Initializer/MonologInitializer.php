@@ -5,11 +5,13 @@ namespace swestcott\MonologExtension\Context\Initializer;
 use Behat\Behat\Context\Initializer\InitializerInterface,
     Behat\Behat\Context\ContextInterface;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
 class MonologInitializer implements InitializerInterface
 {
     private $container;
 
-    public function __construct($container)
+    public function __construct(ContainerBuilder $container)
     {
         $this->container = $container;
     }
