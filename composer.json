@@ -12,7 +12,8 @@
         "behat/behat": ">=2.4.0,<2.5.0-dev",
         "symfony/config": ">=2.0.0,<2.2.0",
         "symfony/dependency-injection": ">=2.0.0,<2.2.0",
-        "monolog/monolog": "1.2.*"
+        "monolog/monolog": "1.2.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": { "swestcott\\MonologExtension": "src/" }
