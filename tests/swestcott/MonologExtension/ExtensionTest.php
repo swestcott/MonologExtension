@@ -6,6 +6,29 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers swestcott\MonologExtension\Extension::load
+     */
+    public function testSetLoggerName()
+    {
+        $loggerName = 'myLogger';
+        $config = array(
+            'logger_name' => $loggerName,
+            'handlers' => array()
+        );
+
+        $container = new ContainerBuilder();
+        $ext = new Extension();
+        $ext->load($config, $container);
+        $container->compile();
+
+        $this->assertTrue($container->hasParameter('behat.monolog.logger_name'));
+        $this->assertEquals($loggerName, $container->getParameter('behat.monolog.logger_name'));
+    }
+
+    /**
+     * @covers swestcott\MonologExtension\Extension::load
+     */
     public function testSingleHandlerAddedToServiceContainer()
     {
         $handlerName = 'myHandler';
@@ -35,5 +58,33 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $args = $def->getArguments();
         $this->assertContains('php://stdout', $args);
         $this->assertContains('debug', $args);
+    }
+
+    /**
+     * @covers swestcott\MonologExtension\Extension::load
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnknownHandler()
+    {
+        $config = array(
+            'handlers' => array(
+                'null' => array(
+                    'type' => 'doesnotexist'
+                )
+            )
+        );
+
+        $container = new ContainerBuilder();
+        $ext = new Extension();
+        $ext->load($config, $container);
+    }
+
+    /**
+     * @covers swestcott\MonologExtension\Extension::getCompilerPasses
+     */
+    public function testCompilerPassed()
+    {
+        $ext = new Extension();
+        $this->assertEmpty($ext->getCompilerPasses());
     }
 }
