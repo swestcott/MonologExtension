@@ -2,7 +2,9 @@
 
 namespace swestcott\MonologExtension;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder,
+    Symfony\Component\Config\Definition\Processor,
+    Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -77,6 +79,57 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         $ext = new Extension();
         $ext->load($config, $container);
+    }
+
+    public function testTreeBuilderSuccess()
+    {
+        $config = array(
+            'behat' => array(
+                'logger_name' => 'myLogger',
+                'handlers' => array(
+                    'myHandler' => array(
+                        'type' => 'stream'
+                    )
+                )
+            )
+        );
+
+        $builder = new TreeBuilder();
+        $node = $builder->root('behat', 'array');
+
+        $ext = new Extension();
+        $ext->getConfig($node);
+
+        $tree = $builder->buildTree();
+
+        $processor = new Processor();
+        $processedConfig = $processor->process($tree, $config);
+
+        $this->assertEquals($config['behat'], $processedConfig);
+    }
+
+    /**
+     * @covers swestcott\MonologExtension\Extension::getConfig
+     * @expectedException Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function testTreeBuilderNoHandlersException()
+    {
+        $config = array(
+            'behat' => array(
+                'handlers' => array()
+            )
+        );
+
+        $builder = new TreeBuilder();
+        $node = $builder->root('behat', 'array');
+
+        $ext = new Extension();
+        $ext->getConfig($node);
+
+        $tree = $builder->buildTree();
+
+        $processor = new Processor();
+        $processor->process($tree, $config);
     }
 
     /**
