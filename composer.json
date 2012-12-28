@@ -1,6 +1,9 @@
 {
     "name": "swestcott/monolog-extension",
-    "description": "Description of project MonologExtension.",
+    "description": "Monolog extension for Behat",
+    "keywors": ["behat", "bdd", "monolog"],
+    "homepage": "https://github.com/swestcott/MonologExtension",
+    "license": "New BSD license",
     "authors": [
         {
             "name": "Simon Westcott",

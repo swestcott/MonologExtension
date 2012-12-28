@@ -38,4 +38,3 @@ class MonologInitializer implements InitializerInterface
         return $class->implementsInterface('Behat\Behat\Context\SubcontextableContextInterface');
     }
 }
-
