@@ -18,6 +18,6 @@ class Factory
             $logger->pushHandler($handler);
         }
 
-	return $logger;
+        return $logger;
     }
 }
