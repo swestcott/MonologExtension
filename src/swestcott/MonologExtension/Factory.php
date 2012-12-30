@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Factory
 {
-    // TODO - refactor out container dep
     public function get(ContainerBuilder $container, $name) {
         $class = $container->getParameter('behat.monolog.class');
         $logger = new $class($name);

@@ -19,7 +19,6 @@ class MonologInitializer implements InitializerInterface
     public function initialize(ContextInterface $context)
     {
         $loggerName = $this->container->getParameter('behat.monolog.logger_name');
-        $class = $this->container->getParameter('behat.monolog.class');
 
         $def = $this->container->getDefinition('behat.monolog.logger.manager');
         $def->setArguments(array($this->container, get_class($context)));
