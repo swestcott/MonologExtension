@@ -46,7 +46,9 @@ Output,
 
 Installation
 ------------
-Just add to your composer.json file
+
+Just add the dependency to composer.json,
+
 ```json
     "require": {
         ...
