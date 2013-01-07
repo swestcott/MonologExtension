@@ -53,3 +53,8 @@ Just add to your composer.json file
         "swestcott/monolog-extension": "*"
     }
 ```
+
+Copyright
+---------
+
+Copyright (c) 2013 Simon Westcott. See LICENSE for details.
