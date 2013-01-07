@@ -50,10 +50,10 @@ Installation
 Just add the dependency to composer.json,
 
 ```json
-    "require": {
-        ...
-        "swestcott/monolog-extension": "*"
-    }
+"require": {
+    ...
+    "swestcott/monolog-extension": "*"
+}
 ```
 
 Copyright
