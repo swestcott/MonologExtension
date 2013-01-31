@@ -6,12 +6,30 @@ MonologExtension
 
 Integrates the [Monolog](https://github.com/Seldaek/monolog) logging framework with Behat.
 
-Example Usage
+Installation
+------------
+
+Add the dependency to composer.json,
+
+```json
+"require": {
+    ...
+    "swestcott/monolog-extension": "*"
+}
+```
+
+And install/update your dependancies,
+
+```bash
+$ curl http://getcomposer.org/installer | php
+$ php composer.phar install
+```
+
+Configuration
 -------------
 
-behat.yml,
-
-``` 
+```yaml
+# behat.yml
 default:
   extensions:
     swestcott\MonologExtension\Extension:
@@ -22,10 +40,15 @@ default:
           level: debug
 ```
 
-Context/Sub-Context,
+Usage
+-----
+
+Each context/subcontext is assigned it's own Monolog channel, named after context class name. It is set directly against the context.
+
+### Example 1
 
 ```php
-class class FeatureContext extends BehatContext
+class FeatureContext extends BehatContext
 {
     /**
      * @When /^I add together "([^"]*)" and "([^"]*)"$/
@@ -44,16 +67,28 @@ Output,
 [2013-01-01 00:00:00] FeatureContext.INFO: Adding "1" and "2" [] []
 ```
 
-Installation
-------------
+### Example 2
 
-Just add the dependency to composer.json,
+Including context in messages
 
-```json
-"require": {
-    ...
-    "swestcott/monolog-extension": "*"
+```php
+class FeatureContext extends BehatContext
+{
+    /**
+     * @When /^I add together "([^"]*)" and "([^"]*)"$/
+     */
+    public function iAddTogether($value1, $value2)
+    {
+        $this->logger->info('Adding values', array($value1, $value2));
+        $this->result = $value1 + $value2;
+    }
 }
+```
+
+Output,
+
+```
+[2013-01-01 00:00:00] FeatureContext.INFO: Adding values ["1", "2"] []
 ```
 
 Copyright
