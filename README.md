@@ -1,8 +1,8 @@
 MonologExtension
 ================
 
-- [master](https://github.com/swestcott/MonologExtension) [![Build Status](https://travis-ci.org/swestcott/MonologExtension.png?branch=master)](https://travis-ci.org/swestcott/MonologExtension)
-- [develop](https://github.com/swestcott/MonologExtension/tree/develop) [![Build Status](https://travis-ci.org/swestcott/MonologExtension.png?branch=develop)](https://travis-ci.org/swestcott/MonologExtension)
+- [master](https://github.com/swestcott/MonologExtension) [![Build Status](https://travis-ci.org/swestcott/MonologExtension.png?branch=master)](https://travis-ci.org/swestcott/MonologExtension) [![Coverage Status](https://coveralls.io/repos/swestcott/MonologExtension/badge.svg?branch=master)](https://coveralls.io/r/swestcott/MonologExtension?branch=master)
+- [develop](https://github.com/swestcott/MonologExtension/tree/develop) [![Build Status](https://travis-ci.org/swestcott/MonologExtension.png?branch=develop)](https://travis-ci.org/swestcott/MonologExtension) [![Coverage Status](https://coveralls.io/repos/swestcott/MonologExtension/badge.svg?branch=develop)](https://coveralls.io/r/swestcott/MonologExtension?branch=develop)
 
 Integrates the [Monolog](https://github.com/Seldaek/monolog) logging framework with Behat.
 
