@@ -9,7 +9,10 @@
          forceCoversAnnotation="true"
          processIsolation="false"
          stopOnFailure="false"
-         strict="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         checkForUnintentionallyCoveredCode="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true"
          syntaxCheck="false"
          bootstrap="vendor/autoload.php"
 >
